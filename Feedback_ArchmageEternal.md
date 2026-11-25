@@ -64,21 +64,42 @@ biomen bijna gratis meekomen.
 
 ## 4. Waarom ging het minder goed?
 
-- **Ik stopte bij "het werkt".** Per ticket testte ik of het spel deed wat het
-  moest doen, en dan ging ik verder naar het volgende ticket. Een review-pass
-  over de hele file op het einde heb ik niet gedaan.
-- **Copy-paste in plaats van extraheren.** Toen ik in de constructor al
-  "kies drie verschillende letters" had geschreven, heb ik dat bij
-  `GenerateBiomeSeed` opnieuw getypt in plaats van er een methode van te maken.
-  Op dat moment was dat sneller, maar het kost nu onderhoud.
-- **Strings behandelde ik als code, niet als tekst.** Ze compileren allemaal, dus
-  ik controleerde ze niet op grammatica. Dat is jammer, want de speler leest die
-  zinnen als enige van mijn werk.
-- **Commentaar zag ik als decoratie van de Startcode.** Ik ben vergeten om de
-  koppen bij te werken toen de code veranderde.
-- **Geen tests.** Ik heb niets geautomatiseerd, dus ik moest vertrouwen op
-  manueel spelen. Daardoor zijn dingen als `Location = 0` bij "al op kamp" en de
-  taalfout er doorgeglipt.
+Er zijn twee soorten oorzaken: een gat in mijn voorkennis, en een paar gewoontes
+die ik tijdens het werken niet heb bijgestuurd.
+
+**a) Ik heb de les vlak voor deze PE gemist.** Door familieomstandigheden was ik
+niet aanwezig in de les waarin deze leerstof werd uitgelegd. Ik heb dat thuis
+proberen op te vangen met AI en met YouTube-video's, en daarmee heb ik de basis
+wel gehaald: alle tickets werken. Maar video's kijken is passief leren. Ik
+herken de code wanneer ik ze zie, maar ik kan ze niet zelf reproduceren of
+toepassen in een situatie die ik niet letterlijk gezien heb. Dat merk je precies
+op de plek waar het fout ging: refactoren. Ik wist *wat* een hulpmethode is,
+maar niet *wanneer* ik er zelf één moet maken.
+
+**b) Ik stopte bij "het werkt".** Per ticket testte ik of het spel deed wat het
+moest doen, en dan ging ik verder naar het volgende ticket. Een review-pass over
+de hele file op het einde heb ik niet gedaan.
+
+**c) Copy-paste in plaats van extraheren.** Toen ik in de constructor al "kies
+drie verschillende letters" had geschreven, heb ik dat bij `GenerateBiomeSeed`
+opnieuw getypt in plaats van er een methode van te maken. Op dat moment was dat
+sneller, maar het kost nu onderhoud.
+
+**d) Strings behandelde ik als code, niet als tekst.** Ze compileren allemaal,
+dus ik controleerde ze niet op grammatica. Dat is jammer, want de speler leest
+die zinnen als enige van mijn werk.
+
+**e) Commentaar zag ik als decoratie van de startcode.** Ik ben vergeten om de
+koppen bij te werken toen de code veranderde.
+
+**f) Ik heb niemand om feedback gevraagd terwijl ik werkte.** Omdat ik de les had
+gemist, had ik net tijdens het maken van de oefening moeten vragen: "is dit de
+juiste manier om dit op te lossen?" Dat heb ik niet gedaan, en dan blijf je je
+eigen fouten herhalen.
+
+**g) Geen tests.** Ik heb niets geautomatiseerd, dus ik moest vertrouwen op
+manueel spelen. Daardoor zijn dingen als `Location = 0` bij "al op kamp" en de
+taalfout er doorgeglipt.
 
 ---
 
@@ -114,7 +135,8 @@ biomen bijna gratis meekomen.
 ## 7. Wat ik nog niet onder de knie heb
 
 - **Refactoren en methodes extraheren (DRY).** Dit is mijn grootste zwakte in
-  deze PE: ik schrijf liever opnieuw dan dat ik generaliseer.
+  deze PE: ik schrijf liever opnieuw dan dat ik generaliseer. Dit hangt samen
+  met de les die ik gemist heb.
 - **Code review van mijn eigen werk.** Commentaar up-to-date houden en dode code
   verwijderen gaat bij mij systematisch mis.
 - **Nette, consistente output.** Grammatica en toon in spelberichten.
@@ -122,6 +144,10 @@ biomen bijna gratis meekomen.
   asserts of unit tests.
 - **Naamgeving van hulpmethodes en constanten** die ook voor een tweede gebruik
   werkt, niet alleen voor het geval waarvoor ik ze schrijf.
+
+Belangrijk voor mezelf: **video's kijken alleen werkt bij mij niet.** Ik kan
+uitleg volgen, maar zonder zelf te schrijven en zonder iemand die mijn code
+nakijkt, blijft het bij herkennen in plaats van kunnen.
 
 ---
 
@@ -131,7 +157,11 @@ biomen bijna gratis meekomen.
    opnieuw builden.
 2. De comments in alle drie de bestanden bijwerken naar iteratie 2.
 3. Alle spelberichten herlezen en de taalfouten eruit halen.
-4. Twee oefeningen maken rond methodes extraheren (een lang blok opsplitsen in
-   kleine methodes met parameters).
-5. Bij de volgende PE: eerst ticketlijst, dan implementeren per ticket, dan een
-   review-pass, dan pas committen.
+4. **De gemiste les inhalen bij de lector**: vragen welke leerstof ik heb
+   gemist en of ik mijn herschreven `World.cs` mag laten nakijken.
+5. **Actief oefenen in plaats van video's kijken**: twee oefeningen rond
+   methodes extraheren, en daarna mijn oplossing vergelijken met een
+   voorbeeldoplossing.
+6. Bij de volgende PE: eerst ticketlijst, dan implementeren per ticket, dan een
+   review-pass, dan pas committen — en bij twijfel meteen vragen stellen in
+   plaats van achteraf.
