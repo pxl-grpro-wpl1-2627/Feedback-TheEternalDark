@@ -25,20 +25,19 @@ de lectorversie geeft daar nul verschillende regels.
 
 ## 2. Wat goed ging
 
-- **Alle 13 tickets zijn functioneel correct.** De drie `Has...`-properties staan
-  op `Player`, staan in de constructor op `false`, en `TryFindSpecialItem()`
-  zet de juiste property en geeft `null` terug als er niets gevonden is.
-- **`EffectiveSunCost` is op alle drie de plaatsen gebruikt** in `BuildSun()`:
-  bij de controle, bij het aftrekken én in de foutboodschap. Dat is precies wat
-  TEAR-04 vraagt, en dat is makkelijk om half te doen.
-- **`Math.Max(..., 0)`** zit er, dus de kostprijs kan nooit negatief worden.
-- **Geen publieke velden.** Alles is een property, zoals in de opdracht staat.
-- **De kansberekening klopt.** `rnd.Next(1, ItemFindChance + 1) == 1` geeft
-  effectief 1 op 8, hetzelfde als de lectoroplossing.
-- **De drie voorwerpbiomen zijn gegarandeerd verschillend**, omdat ik elke
-  gekozen letter uit de pool verwijder met `Remove(pick, 1)`.
-- **Ik heb per ticket gecommit.** Daardoor kon ik elke feature apart terugdraaien
-  als iets stukging.
+- **Alle 13 tickets werken.** De drie `Has...`-properties staan op `Player`, staan
+  in de constructor op `false`, en `TryFindSpecialItem()` zet de juiste property
+  en geeft `null` terug als er niets gevonden is.
+- **Ik begrijp de structuur van het project.** Ik wist welke klasse welke
+  verantwoordelijkheid heeft, en ik heb de nieuwe code op de juiste plaats gezet:
+  de hond raakt `Biome`, de traan en het oog raken `Player`, de voorwerpen raken
+  `World`. Daardoor heb ik geen gegeven bestand moeten aanpassen.
+- **Ik heb strikt per ticket gewerkt.** Eerst DOG, dan TEAR, dan EYE, dan FIND.
+  Toen iets niet klopte, wist ik meteen in welke commit het zat.
+- **Ik heb het spel volledig getest**, drie keer helemaal opnieuw, in plaats van
+  alleen te vertrouwen op "het compileert".
+- **`EffectiveSunCost` is op alle drie de plaatsen gebruikt** in `BuildSun()`
+  (controle, aftrekken, foutboodschap) en de kostprijs kan nooit negatief worden.
 
 ---
 
@@ -47,121 +46,119 @@ de lectorversie geeft daar nul verschillende regels.
 | # | Probleem | Waar | Wat de lector doet |
 | --- | --- | --- | --- |
 | 1 | **Dubbele code**: de logica om distinct letters te kiezen staat twee keer (constructor én `GenerateBiomeSeed`). | `World.cs` | Eén private `PickDistinctLetters(string pool, int count)`, voor beide gevallen gebruikt. |
-| 2 | **Verouderde commentaar**: de bestandskop zegt nog "Standard solution for iteration 1 (WORLD-01 .. WORLD-04)", terwijl er iteratie-2-code onder staat. | `World.cs`, `Player.cs`, `Biome.cs` | Commentaar beschrijft de huidige code, inclusief waarom. |
-| 3 | **Taalfout in een spelbericht**: `Name + " You are already at camp."` → "Bob You are already at camp." Het werkwoord ontbreekt. | `Player.ReturnToCamp()` | `Name + " is already at camp."` |
-| 4 | **Spelfouten in spelteksten**: "alredy shinning", "You need go back to the camp", "thats finally pretty warm right here". | `Player.BuildSun()` | Neutrale, correcte zinnen. |
-| 5 | **Dode code**: in de branch waarin de speler al op kamp staat, zet ik nog `Location = 0;` terwijl dat al zo is. | `Player.ReturnToCamp()` | Die regel staat er niet. |
+| 2 | **Verouderde commentaar**: de bestandskop zegt nog "Standard solution for iteration 1". | alle drie | Commentaar beschrijft de huidige code, inclusief waarom. |
+| 3 | **Taalfout in een spelbericht**: `Name + " You are already at camp."` mist het werkwoord "is". | `Player.ReturnToCamp()` | `Name + " is already at camp."` |
+| 4 | **Spelfouten** in spelteksten: "alredy shinning", "You need go back", "thats finally pretty warm right here". | `Player.BuildSun()` | Neutrale, correcte zinnen. |
+| 5 | **Dode code**: `Location = 0;` in de branch waarin de speler al op kamp staat. | `Player.ReturnToCamp()` | Die regel staat er niet. |
 | 6 | **Random-stijl**: `rnd.Next(1, ItemFindChance + 1) == 1` is correct, maar minder leesbaar dan de 0-gebaseerde variant. | `World.TryFindSpecialItem()` | `rnd.Next(0, ItemFindChance) == 0` |
-| 7 | **Rommel in de file**: een lege regel met alleen spaties en een commentaarblok dat los staat van de methode. | `World.cs` | Opgeruimde opmaak. |
 
-Verder is het verschil in omvang van de wereld een bewuste keuze, geen fout: de
-lector gebruikt 7 biomen (`bcefghi`, inclusief de easter eggs) en ik hou het bij
-de 4 die de opdracht voorschrijft (`bcef`). Dat is functioneel even correct,
-maar de lectoroplossing is wel generieker opgeschreven, waardoor die extra
-biomen bijna gratis meekomen.
+Wat mij zelf het meest stoort: **ik gebruik alleen de eenvoudigste methodes die
+ik ken.** Ze werken, maar ze zijn niet altijd de beste keuze voor de situatie.
+Ik heb geen "gereedschapskist" waaruit ik kies; ik pak altijd hetzelfde stuk
+gereedschap omdat ik de rest niet vlot kan schrijven.
+
+De lectoroplossing is op die punten beter. Dat is ook logisch: hij schrijft deze
+code al jaren en heeft dezelfde soort opgave al tientallen keren opgelost. Het
+verschil zit in routine en toepassing, niet in iets wat ik niet zou kunnen leren.
 
 ---
 
 ## 4. Waarom ging het minder goed?
 
-Er zijn twee soorten oorzaken: een gat in mijn voorkennis, en een paar gewoontes
-die ik tijdens het werken niet heb bijgestuurd.
-
 **a) Ik heb de les vlak voor deze PE gemist.** Door familieomstandigheden was ik
 niet aanwezig in de les waarin deze leerstof werd uitgelegd. Ik heb dat thuis
-proberen op te vangen met AI en met YouTube-video's, en daarmee heb ik de basis
-wel gehaald: alle tickets werken. Maar video's kijken is passief leren. Ik
-herken de code wanneer ik ze zie, maar ik kan ze niet zelf reproduceren of
-toepassen in een situatie die ik niet letterlijk gezien heb. Dat merk je precies
-op de plek waar het fout ging: refactoren. Ik wist *wat* een hulpmethode is,
-maar niet *wanneer* ik er zelf één moet maken.
+opgevangen met online lessen en met AI, en zo heb ik de basis wel gehaald: alle
+tickets werken. Maar video's kijken is passief leren. Ik herken de code wanneer
+ik ze zie, maar ik kan ze niet zelf reproduceren in een situatie die ik niet
+letterlijk gezien heb.
 
-**b) Ik stopte bij "het werkt".** Per ticket testte ik of het spel deed wat het
-moest doen, en dan ging ik verder naar het volgende ticket. Een review-pass over
-de hele file op het einde heb ik niet gedaan.
+**b) Ik kon het laatste ticket niet "zien".** Bij FIND heb ik de opgave zeker
+tien tot twintig keer herlezen en ik kon er geen volledig beeld van maken in mijn
+hoofd. Ik wist wat er stond, maar niet hoe ik het moest opschrijven. Pas nadat ik
+het in kleine stukjes knipte, kwam er beweging in. Dat kostte bijna al mijn tijd:
+van de ongeveer 1 uur en 40 minuten is het grootste deel naar dat ene ticket
+gegaan.
 
-**c) Copy-paste in plaats van extraheren.** Toen ik in de constructor al "kies
-drie verschillende letters" had geschreven, heb ik dat bij `GenerateBiomeSeed`
-opnieuw getypt in plaats van er een methode van te maken. Op dat moment was dat
-sneller, maar het kost nu onderhoud.
+**c) Ik kopieer methodes uit mijn eigen oude code.** Als een nieuwe opgave
+"ongeveer hetzelfde" voelt, neem ik een methode over uit een vorige oefening.
+Maar de situatie is nooit precies dezelfde, dus dan sleep ik een oplossing mee
+die niet past — en dat is precies waarom de logica in `World.cs` twee keer staat.
 
-**d) Strings behandelde ik als code, niet als tekst.** Ze compileren allemaal,
-dus ik controleerde ze niet op grammatica. Dat is jammer, want de speler leest
-die zinnen als enige van mijn werk.
+**d) Ik heb niemand om feedback gevraagd terwijl ik werkte.** Omdat ik de les had
+gemist, had ik net tijdens het maken moeten vragen: "is dit de juiste manier?"
+Dat heb ik niet gedaan, en dan herhaal je je eigen fouten.
 
-**e) Commentaar zag ik als decoratie van de startcode.** Ik ben vergeten om de
-koppen bij te werken toen de code veranderde.
+**e) Taal.** Ik leer programmeren in het Nederlands, en dat is niet mijn
+moedertaal. Programmeren vind ik zelfs in mijn eigen taal moeilijk; in het
+Nederlands komt daar nog een laag bij. Vooral bij lange, formele opgavebeschrijvingen
+kost het lezen mij meer tijd dan het schrijven van de code.
 
-**f) Ik heb niemand om feedback gevraagd terwijl ik werkte.** Omdat ik de les had
-gemist, had ik net tijdens het maken van de oefening moeten vragen: "is dit de
-juiste manier om dit op te lossen?" Dat heb ik niet gedaan, en dan blijf je je
-eigen fouten herhalen.
-
-**g) Geen tests.** Ik heb niets geautomatiseerd, dus ik moest vertrouwen op
-manueel spelen. Daardoor zijn dingen als `Location = 0` bij "al op kamp" en de
-taalfout er doorgeglipt.
+**f) Geen automatische tests.** Ik test manueel, dus fouten zoals de taalfout en
+de dode regel glippen er door.
 
 ---
 
 ## 5. Wat ik meeneem naar de volgende keer
 
-1. **Regel voor mezelf:** schrijf ik dezelfde 5+ regels twee keer, dan wordt het
-   een methode met parameters. In dit geval: `PickDistinctLetters(pool, count)`.
-2. **Verplichte review-pass vóór de laatste commit:** de volledige diff lezen en
-   specifiek checken op (a) commentaar dat niet meer klopt, (b) dode regels,
-   (c) spelteksten.
-3. **Spelteksten hardop lezen.** Als een zin raar klinkt, is hij fout.
-4. **Eén vaste stijl voor random** (0-gebaseerd) en de kans in commentaar zetten.
-5. **Kleine asserts toevoegen**, ook als de opdracht er niet om vraagt,
-   bijvoorbeeld: `EffectiveSunCost` is nooit negatief, en
-   `DogBiome != AngelTearBiome`.
+1. **Geen lessen meer missen.** Als het toch gebeurt: meteen de lector mailen en
+   vragen wat ik moet inhalen, niet pas achteraf.
+2. **Stoppen met methodes kopiëren uit oude code.** Eerst kijken wat de nieuwe
+   situatie vraagt, dan pas schrijven. Voelt de opgave "hetzelfde", dan is dat
+   juist het moment om extra op te letten.
+3. **De opgave in stukjes knippen voor ik begin.** Bij FIND had ik eerst de
+   deelvragen op papier moeten zetten; dan was het denkwerk kleiner geweest.
+4. **Vragen stellen tijdens het werken**, niet na de deadline.
+5. **Een review-pass voor de laatste commit:** commentaar bijwerken, dode regels
+   verwijderen, spelteksten hardop lezen.
 
 ---
 
 ## 6. Wat ik al goed beheers
 
+- **Structuur en verantwoordelijkheden**: welke klasse doet wat, en waar hoort
+  nieuwe code thuis.
 - **Properties en encapsulatie** — geen publieke velden, `get; set;` waar nodig.
 - **Constructors** en het correct initialiseren van alle velden.
 - **`const` vs. gewone velden**, en `private` vs. `public` constanten.
-- **Methodes met parameters en returnwaarden**, en private hulpmethodes
-  (`EffectiveSunCost`).
-- **`Math.Max` / `Math.Abs`** en integer-deling.
-- **`Random`** en kansberekening.
+- **Methodes met parameters en returnwaarden**, en eenvoudige private
+  hulpmethodes zoals `EffectiveSunCost`.
+- **`Math.Max` / `Math.Abs`**, integer-deling en `Random` met kansberekening.
 - **Stringmanipulatie**: indexering, `IndexOf`, `Substring`, `Remove`.
-- **If/else met vroege returns** in plaats van diepe nesting.
+- **If/else met vroege returns.**
+
+Ik los al een tijd problemen op via LeetCode, en dat merk ik wel: als ik de
+logica eenmaal zie, kan ik ze opschrijven. Mijn beste momenten zijn de keren dat
+ik de volledige code in één keer in mijn hoofd zie en hem gewoon kan uitschrijven.
 
 ---
 
 ## 7. Wat ik nog niet onder de knie heb
 
-- **Refactoren en methodes extraheren (DRY).** Dit is mijn grootste zwakte in
-  deze PE: ik schrijf liever opnieuw dan dat ik generaliseer. Dit hangt samen
-  met de les die ik gemist heb.
-- **Code review van mijn eigen werk.** Commentaar up-to-date houden en dode code
-  verwijderen gaat bij mij systematisch mis.
-- **Nette, consistente output.** Grammatica en toon in spelberichten.
-- **Kleinschalig testen.** Ik leun te veel op manueel spelen in plaats van op
-  asserts of unit tests.
-- **Naamgeving van hulpmethodes en constanten** die ook voor een tweede gebruik
-  werkt, niet alleen voor het geval waarvoor ik ze schrijf.
+- **Methodes kiezen en refactoren.** Ik ken de theorie van hulpmethodes, maar ik
+  pas ze niet spontaan toe. Dit is mijn grootste technische zwakte in deze PE.
+- **Een complexe opgave omzetten naar code.** Bij een korte, duidelijke opgave lukt
+  het; bij een lange beschrijving verlies ik het overzicht.
+- **Nette, consistente output** — grammatica en toon in spelberichten.
+- **Kleinschalig testen** met asserts in plaats van enkel manueel spelen.
+- **Taal**: opgavebeschrijvingen in het Nederlands sneller en preciezer lezen.
 
-Belangrijk voor mezelf: **video's kijken alleen werkt bij mij niet.** Ik kan
-uitleg volgen, maar zonder zelf te schrijven en zonder iemand die mijn code
-nakijkt, blijft het bij herkennen in plaats van kunnen.
+Ik heb niet echt één C#-onderwerp dat ik "van nul opnieuw moet studeren". Het
+probleem zit minder in de theorie dan in de toepassing: ik weet wat een methode
+is, maar ik zie niet wanneer ik er zelf één moet maken.
 
 ---
 
 ## 8. Concreet plan
 
-1. `World.cs` herschrijven met één `PickDistinctLetters(pool, count)` en
-   opnieuw builden.
-2. De comments in alle drie de bestanden bijwerken naar iteratie 2.
-3. Alle spelberichten herlezen en de taalfouten eruit halen.
-4. **De gemiste les inhalen bij de lector**: vragen welke leerstof ik heb
-   gemist en of ik mijn herschreven `World.cs` mag laten nakijken.
-5. **Actief oefenen in plaats van video's kijken**: twee oefeningen rond
-   methodes extraheren, en daarna mijn oplossing vergelijken met een
+1. `World.cs` herschrijven met één `PickDistinctLetters(pool, count)` en opnieuw
+   builden — zodat ik het verschil zelf heb toegepast.
+2. De comments in alle drie de bestanden bijwerken naar iteratie 2 en de
+   spelteksten herlezen.
+3. **De gemiste leerstof inhalen bij de lector**: vragen wat ik heb gemist en of
+   hij mijn herschreven `World.cs` wil nakijken.
+4. **Actief oefenen in plaats van video's kijken**: twee oefeningen waarbij ik
+   een lang blok zelf moet opsplitsen in methodes, en daarna vergelijken met een
    voorbeeldoplossing.
-6. Bij de volgende PE: eerst ticketlijst, dan implementeren per ticket, dan een
-   review-pass, dan pas committen — en bij twijfel meteen vragen stellen in
-   plaats van achteraf.
+5. Bij de volgende PE: eerst ticketlijst en deelvragen op papier, dan per ticket
+   implementeren, dan een review-pass, dan committen — en bij twijfel meteen
+   vragen stellen.
